@@ -229,7 +229,7 @@ class Net(nn.Module):
             F.interpolate(layer_1_side_out_fuse,
                           (input.size()[2], input.size()[3]),
                           mode='bilinear', align_corners=True)
-        out = F.sigmoid(layer_1_side_upsample)
+        out = torch.sigmoid(layer_1_side_upsample)
         return out, layer_1_side_out, layer_2_side_out, layer_3_side_out, layer_4_side_out
 
 
