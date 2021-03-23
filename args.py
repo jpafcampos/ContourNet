@@ -12,13 +12,13 @@ class Args():
                                 default=64,
                                 help='batch_size')
         self.parse.add_argument('--file_root', type=str,
-                                default='/home/zhangcb/Desktop/resnet50v2/data/train.txt',
+                                default='/content/train.txt',
                                 help='train.txt')
         self.parse.add_argument('--base_root_img', type=str,
-                                default='/home/zhangcb/Desktop/VOCpreprocessed/PASCALContourData/JPEGImages',
+                                default='/content/JPEGImages',
                                 help='the parent root of image')
         self.parse.add_argument('--base_root_mask', type=str,
-                                default='/home/zhangcb/Desktop/VOCpreprocessed/PASCALContourData/groundTruth',
+                                default='/content/SegmentationObjectFilledDenseCRF',
                                 help='the parent root of mask')
         self.parse.add_argument('--mode', type=str, default='train',
                                 help='train or val or predict')

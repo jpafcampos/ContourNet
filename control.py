@@ -52,7 +52,7 @@ class control():
                                 batch_size=2,
                                 shuffle=True,
                                 num_workers=8)
-        val_data = dataset('/home/zhangcb/Desktop/resnet50v2/data/val.txt',
+        val_data = dataset('/content/val.txt',
                            flags.base_root_img,
                            flags.base_root_mask,
                            flags.mode)
@@ -63,7 +63,7 @@ class control():
 
         #small_lr_layers = list(map(id, self.net.model.parameters()))
         #large_lr_layers = filter(lambda p:id(p) not in small_lr_layers, self.net.parameters())
-        self.net.load_state_dict(torch.load('./checkpoint/iter2.pth'))
+        #self.net.load_state_dict(torch.load('./checkpoint/iter2.pth'))
         optimizer = torch.optim.SGD(self.net.parameters(), lr=1e-3, momentum=0.9)
         #optimizer = torch.optim.Adam(params=self.net.parameters(),lr=1e-3) #no-weight-decay
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, verbose=True,patience=2, factor=0.2,mode='min')
@@ -118,7 +118,7 @@ class control():
 
     def predict(self):
         img_list = []
-        data = dataset('/home/zhangcb/Desktop/resnet50v2/data/val.txt',
+        data = dataset('/content/val.txt',
                        flags.base_root_img,
                        flags.base_root_mask,
                        flags.mode)
@@ -151,7 +151,7 @@ class control():
             img = result.cpu().detach().numpy()*255
             img = Image.fromarray(np.array(img))
             img = img.convert('L')
-            img.save('/home/zhangcb/Desktop/edge_val/data/edge/'+str(name)+'.png')
+            img.save('content/'+str(name)+'.png')
             #writer.add_image(img_name, image)
             #result = torch.squeeze(result, dim=0)
             #result = torch.squeeze(result, dim=0)
