@@ -24,27 +24,19 @@ class control():
     def __init__(self):
         pass
 
-    def compute_loss(self, output, label):
-        '''
-        positive = label.sum().item()
-        negative = label.size()[0] * label.size()[1] * label.size()[2] - positive
-        alpha = 1.1 * positive / (positive + negative)
-        beta = negative / (positive + negative)
-        weight = torch.empty(output.size()[0], output.size()[1], output.size()[2])
-        weight[label >= 0.98] = beta
-        weight[label < 0.98] = alpha
-        weight = weight.to(flags.device)
-        '''
-        print("output in loss")
-        print(type(output))
-        weight = torch.empty(output.size()[0], output.size()[1], output.size()[2], output.size()[3])
-        weight[label >= 0.98] = 10
-        weight[label < 0.98] = 1
-        weight = weight.to(flags.device)
+    def compute_loss(self, prediction, label):
+        label = label.long()
+        mask = label.float()
+        num_positive = torch.sum((mask==1).float()).float()
+        num_negative = torch.sum((mask==0).float()).float()
 
-        label = label.float()
-        loss = F.binary_cross_entropy(output, label, weight)
-        return loss.to(flags.device)
+        mask[mask == 1] = 1.0 * num_negative / (num_positive + num_negative)
+        mask[mask == 0] = 1.1 * num_positive / (num_positive + num_negative)
+        mask[mask == 2] = 0
+        cost = torch.nn.functional.binary_cross_entropy(
+                prediction.float(),label.float(), weight=mask, reduce=False)
+        return torch.sum(cost)
+
     def train(self):
         data = dataset(flags.file_root,
                        flags.base_root_img,
@@ -88,7 +80,10 @@ class control():
                 print(type(results))
                 optimizer.zero_grad()
                 loss = torch.zeros(1).to(flags.device)
-                loss += self.compute_loss(results, y)
+                for r in results:
+                    loss = loss + cross_entropy_loss_RCF(r, y)
+                counter += 1
+                loss = loss / 10
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
