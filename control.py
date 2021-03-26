@@ -27,15 +27,17 @@ class control():
     def compute_loss(self, prediction, label):
         label = label.long()
         mask = label.float()
-        num_positive = torch.sum((mask==1).float()).float()
-        num_negative = torch.sum((mask==0).float()).float()
-
+        num_positive = torch.sum((mask == 1.).float()).float()
+        num_negative = torch.sum((mask == 0.).float()).float()
+        # print(mask)
+    
         mask[mask == 1] = 1.0 * num_negative / (num_positive + num_negative)
         mask[mask == 0] = 1.1 * num_positive / (num_positive + num_negative)
         mask[mask == 2] = 0
+    
         cost = torch.nn.functional.binary_cross_entropy(
-                prediction.float(),label.float(), weight=mask, reduce=False)
-        return torch.sum(cost)
+            prediction.float(), label.float(), weight=mask, reduction='none')
+        return torch.sum(cost) / (num_negative + num_positive)
 
     def train(self):
         data = dataset(flags.file_root,
