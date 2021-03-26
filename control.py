@@ -53,7 +53,7 @@ class control():
                                 shuffle=True,
                                 num_workers=8)
         #val_data = dataset('/home/joao/Documents/CNET/pascal/PASCALContourData/val.txt',
-        val_data = dataset('/content/val.txt',
+        val_data = dataset('/content/train.txt',
                            flags.base_root_img,
                            flags.base_root_mask,
                            flags.mode)
