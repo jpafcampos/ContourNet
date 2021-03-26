@@ -84,7 +84,7 @@ class control():
                 loss = torch.zeros(1).to(flags.device)
 
                 #last layer:
-                print(results[-1].size())
+                print(y.size())
                 loss = self.compute_loss(results[-1], y)
                 #all layers:
                 #for r in results:
