@@ -24,7 +24,7 @@ class control():
     def __init__(self):
         pass
 
-    def compute_loss(self, output, layer_1_side_out, layer_2_side_out, layer_3_side_out, layer_4_side_out, label):
+    def compute_loss(self, output, label):
         '''
         positive = label.sum().item()
         negative = label.size()[0] * label.size()[1] * label.size()[2] - positive
@@ -35,7 +35,7 @@ class control():
         weight[label < 0.98] = alpha
         weight = weight.to(flags.device)
         '''
-        weight = torch.empty(layer_1_side_out.shape[0], layer_2_side_out.shape[1], layer_3_side_out.shape[2], layer_4_side_out.shape[3])
+        weight = torch.empty(output.size()[0], output.size()[1], output.size()[2], output.size()[3])
         weight[label >= 0.98] = 10
         weight[label < 0.98] = 1
         weight = weight.to(flags.device)
@@ -81,10 +81,10 @@ class control():
                 x = x.to(flags.device)
                 y = y.to(flags.device)
 
-                results, layer_1_side_out, layer_2_side_out, layer_3_side_out, layer_4_side_out = self.net(x)
+                results = self.net(x)
                 optimizer.zero_grad()
                 loss = torch.zeros(1).to(flags.device)
-                loss += self.compute_loss(results, layer_1_side_out, layer_2_side_out, layer_3_side_out, layer_4_side_out, y)
+                loss += self.compute_loss(results, y)
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
