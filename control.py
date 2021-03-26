@@ -55,7 +55,7 @@ class control():
                                 shuffle=True,
                                 num_workers=8)
         #val_data = dataset('/home/joao/Documents/CNET/pascal/PASCALContourData/val.txt',
-        val_data = dataset('/content/train.txt',
+        val_data = dataset('/content/val.txt',
                            flags.base_root_img,
                            flags.base_root_mask,
                            flags.mode)
@@ -84,6 +84,8 @@ class control():
                 y = y.to(flags.device)
 
                 results = self.net(x)
+                print("results type")
+                print(type(results))
                 optimizer.zero_grad()
                 loss = torch.zeros(1).to(flags.device)
                 loss += self.compute_loss(results, y)
