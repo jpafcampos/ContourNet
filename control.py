@@ -30,11 +30,11 @@ class control():
         num_positive = torch.sum((mask == 1.).float()).float()
         num_negative = torch.sum((mask == 0.).float()).float()
         # print(mask)
-    
+
         mask[mask == 1] = 1.0 * num_negative / (num_positive + num_negative)
         mask[mask == 0] = 1.1 * num_positive / (num_positive + num_negative)
         mask[mask == 2] = 0
-    
+
         cost = torch.nn.functional.binary_cross_entropy(
             prediction.float(), label.float(), weight=mask, reduction='none')
         return torch.sum(cost) / (num_negative + num_positive)
@@ -82,10 +82,14 @@ class control():
                 print(type(results))
                 optimizer.zero_grad()
                 loss = torch.zeros(1).to(flags.device)
-                for r in results:
-                    loss = loss + self.compute_loss(r, y)
-                counter += 1
-                loss = loss / 10
+
+                #last layer:
+                loss = self.compute_loss(results[-1], y)
+                #all layers:
+                #for r in results:
+                #    loss = loss + self.compute_loss(r, y)
+                #counter += 1
+                #loss = loss / 10
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
