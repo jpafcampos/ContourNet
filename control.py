@@ -35,6 +35,8 @@ class control():
         weight[label < 0.98] = alpha
         weight = weight.to(flags.device)
         '''
+        print("output in loss")
+        print(type(output))
         weight = torch.empty(output.size()[0], output.size()[1], output.size()[2], output.size()[3])
         weight[label >= 0.98] = 10
         weight[label < 0.98] = 1
