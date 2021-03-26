@@ -35,7 +35,7 @@ class control():
         weight[label < 0.98] = alpha
         weight = weight.to(flags.device)
         '''
-        weight = torch.empty(layer_1_side_out.size()[0], layer_2_side_out.size()[1], layer_3_side_out.size()[2], layer_4_side_out.size()[3])
+        weight = torch.empty(layer_1_side_out.shape[0], layer_2_side_out.shape[1], layer_3_side_out.shape[2], layer_4_side_out.shape[3])
         weight[label >= 0.98] = 10
         weight[label < 0.98] = 1
         weight = weight.to(flags.device)
