@@ -81,7 +81,7 @@ class control():
                 optimizer.zero_grad()
                 loss = torch.zeros(1).to(flags.device)
                 for r in results:
-                    loss = loss + cross_entropy_loss_RCF(r, y)
+                    loss = loss + self.compute_loss(r, y)
                 counter += 1
                 loss = loss / 10
                 loss.backward()
