@@ -85,7 +85,7 @@ class control():
 
                 #last layer:
                 print(y.size())
-                loss = self.compute_loss(results[-1], y)
+                loss = self.compute_loss(results[0], y)
                 #all layers:
                 #for r in results:
                 #    loss = loss + self.compute_loss(r, y)
