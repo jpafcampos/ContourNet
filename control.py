@@ -78,8 +78,6 @@ class control():
                 y = y.to(flags.device)
 
                 results = self.net(x)
-                print("results type")
-                print(type(results))
                 optimizer.zero_grad()
                 loss = torch.zeros(1).to(flags.device)
 
@@ -94,7 +92,7 @@ class control():
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
-                #print('epoch: ', epoch, 'step: ', i, 'loss = ', loss.item())
+                print('epoch: ', epoch, 'step: ', i, 'loss = ', loss.item())
             torch.cuda.empty_cache()
             self.net.eval()
             val_loss = 0
