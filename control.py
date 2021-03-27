@@ -71,6 +71,7 @@ class control():
             running_loss = 0
             start_time = time.time()
             self.net.train()
+            counter = 0
             for i, (x, y, img_name) in enumerate(dataloader):
                 img_name = str(img_name).split('/')[-1].split('.')[0]
                 torch.cuda.empty_cache()
@@ -82,13 +83,12 @@ class control():
                 loss = torch.zeros(1).to(flags.device)
 
                 #last layer:
-                print(y.size())
-                loss = self.compute_loss(results[0], y)
+                #loss = self.compute_loss(results[0], y)
                 #all layers:
-                #for r in results:
-                #    loss = loss + self.compute_loss(r, y)
-                #counter += 1
-                #loss = loss / 10
+                for r in results:
+                    loss = loss + self.compute_loss(r, y)
+                counter += 1
+                loss = loss / 10
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
