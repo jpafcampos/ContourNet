@@ -25,6 +25,8 @@ class control():
         pass
 
     def compute_loss(self, prediction, label):
+        print(prediction)
+        print(label)
         label = label.long()
         mask = label.float()
         num_positive = torch.sum((mask == 1.).float()).float()
