@@ -121,7 +121,7 @@ class control():
         #save-checkpoint
         #name = time.strftime('%mm_%dd_%Hh_%Mm_%Ss', time.localtime(time.time()))
         name = flags.checkpoint_name
-        torch.save(self.net.state_dict(), './checkpoint/' + name + '.pth')
+        torch.save(self.net.state_dict(), '/content/drive/MyDrive/' + name + '.pth')
 
     def predict(self):
         img_list = []
@@ -130,7 +130,7 @@ class control():
                        flags.base_root_mask,
                        flags.mode)
         dataloader = DataLoader(data, batch_size=1, shuffle=False, num_workers=8)
-        self.net.load_state_dict(torch.load('./checkpoint/'+flags.checkpoint_name+'.pth'))
+        self.net.load_state_dict(torch.load('/content/drive/MyDrive/'+flags.checkpoint_name+'.pth'))
 
         self.net.eval()
         self.net.to(flags.device)
@@ -147,10 +147,10 @@ class control():
             layer_3 = layer_3.permute(1, 0, 2, 3)
             layer_4 = layer_4.permute(1, 0, 2, 3)
 
-            torchvision.utils.save_image(layer_1,'./result/'+str(i)+'_'+'layer_1.png')
-            torchvision.utils.save_image(layer_2,'./result/'+str(i)+'_'+'layer_2.png')
-            torchvision.utils.save_image(layer_3,'./result/'+str(i)+'_'+'layer_3.png')
-            torchvision.utils.save_image(layer_4,'./result/'+str(i)+'_'+'layer_4.png')
+            torchvision.utils.save_image(layer_1,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_1.png')
+            torchvision.utils.save_image(layer_2,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_2.png')
+            torchvision.utils.save_image(layer_3,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_3.png')
+            torchvision.utils.save_image(layer_4,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_4.png')
 
             y = torch.squeeze(y, dim=0)
             #image = torchvision.utils.make_grid([result, y], padding=2)
