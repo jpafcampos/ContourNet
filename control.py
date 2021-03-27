@@ -25,8 +25,6 @@ class control():
         pass
 
     def compute_loss(self, prediction, label):
-        print(prediction)
-        print(label)
         label = label.long()
         mask = label.float()
         num_positive = torch.sum((mask == 1.).float()).float()
@@ -79,6 +77,7 @@ class control():
                 torch.cuda.empty_cache()
                 x = x.to(flags.device)
                 y = y.to(flags.device)
+                print(y)
 
                 results = self.net(x)
                 optimizer.zero_grad()
