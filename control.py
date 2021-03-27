@@ -81,7 +81,6 @@ class control():
                 torch.cuda.empty_cache()
                 x = x.to(flags.device)
                 y = y.to(flags.device)
-                print(y)
 
                 results = self.net(x)
                 optimizer.zero_grad()
