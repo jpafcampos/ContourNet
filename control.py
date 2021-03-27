@@ -83,12 +83,12 @@ class control():
                 loss = torch.zeros(1).to(flags.device)
 
                 #last layer:
-                #loss = self.compute_loss(results[0], y)
+                loss = self.compute_loss(results[-1], y)
                 #all layers:
-                for r in results:
-                    loss = loss + self.compute_loss(r, y)
-                counter += 1
-                loss = loss / 10
+                #for r in results:
+                #    loss = loss + self.compute_loss(r, y)
+                #counter += 1
+                #loss = loss / 10
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
