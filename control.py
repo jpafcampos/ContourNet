@@ -88,7 +88,7 @@ class control():
 
                 #calculate loss from criterion
                 y = y.long()
-                loss = criterion(results[-1], y)
+                loss = criterion(results, y)
                 #last layer:
                 #loss = self.compute_loss(results[-1], y)
                 #all layers:
