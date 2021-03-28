@@ -88,14 +88,14 @@ class control():
 
                 #calculate loss from criterion
                 y = y.long()
-                loss = criterion(results, y)
+                #loss = criterion(results, y)
                 #last layer:
                 #loss = self.compute_loss(results[-1], y)
                 #all layers:
-                #for r in results:
-                #    loss = loss + self.compute_loss(r, y)
-                #counter += 1
-                #loss = loss / 10
+                for r in results:
+                    loss = loss + criterion(r,y)
+                counter += 1
+                loss = loss / 10
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
