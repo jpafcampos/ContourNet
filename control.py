@@ -112,8 +112,8 @@ class control():
                 #y = y.long()
                 #loss = criterion(results[-1], y)
                 #last layer:
-                #loss = self.compute_loss(results[-1], y)
-                loss = self.compute_loss_cnet(results[-1], y)
+                loss = self.compute_loss(results[-1], y)
+                #loss = self.compute_loss_cnet(results[-1], y)
                 #all layers:
                 #for r in results:
                 #    loss = loss + criterion(r,y)
@@ -134,7 +134,8 @@ class control():
                 y = y.to(flags.device)
 
                 results = self.net(x)
-                val_loss += self.compute_loss_cnet(results[-1], y).item()
+                val_loss += self.compute_loss(results[-1], y).item()
+                #val_loss += self.compute_loss_cnet(results[-1], y).item()
 
             scheduler.step(val_loss, epoch=epoch)
 
