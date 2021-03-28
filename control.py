@@ -99,7 +99,8 @@ class control():
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
-                print('epoch: ', epoch, 'step: ', i, 'loss = ', loss.item())
+                if (i%500 == 0):
+                    print('epoch: ', epoch, 'step: ', i, 'loss = ', loss.item())
             torch.cuda.empty_cache()
             self.net.eval()
             val_loss = 0
