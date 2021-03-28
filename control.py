@@ -13,6 +13,9 @@ import torchvision
 from tensorboardX import SummaryWriter
 from thop import profile
 from torchvision import transforms
+from PIL import Image
+import matplotlib
+import matplotlib.pyplot as plt
 
 writer = SummaryWriter('./tensorboard_logs/iter1')
 
@@ -92,6 +95,7 @@ class control():
 
         self.net.to(flags.device)
         self.net.train()
+        loss_hist = []
         for epoch in range(flags.epoches):
             running_loss = 0
             start_time = time.time()
@@ -121,6 +125,7 @@ class control():
                 loss.backward()
                 optimizer.step()
                 running_loss += loss.item()
+                loss_hist.append(running_loss)
                 if (i%500 == 0):
                     print('epoch: ', epoch, 'step: ', i, 'loss = ', loss.item())
             torch.cuda.empty_cache()
@@ -150,7 +155,12 @@ class control():
         #save-checkpoint
         #name = time.strftime('%mm_%dd_%Hh_%Mm_%Ss', time.localtime(time.time()))
         name = flags.checkpoint_name
-        torch.save(self.net.state_dict(), '/content/drive/MyDrive/' + name + '.pth')
+        torch.save(self.net.state_dict(), '/content/gdrive/MyDrive/' + name + '.pth')
+        plt.plot(loss_hist)
+        plt.xlabel("Time")
+        plt.ylabel("Loss")
+        plt.title("Loss function evolution")
+        plt.savefig('/content/gdrive/MyDrive/loss.png')
 
     def predict(self):
         img_list = []
@@ -159,7 +169,7 @@ class control():
                        flags.base_root_mask,
                        flags.mode)
         dataloader = DataLoader(data, batch_size=1, shuffle=False, num_workers=8)
-        self.net.load_state_dict(torch.load('/content/drive/MyDrive/'+flags.checkpoint_name+'.pth'))
+        self.net.load_state_dict(torch.load('/content/gdrive/MyDrive/'+flags.checkpoint_name+'.pth'))
 
         self.net.eval()
         self.net.to(flags.device)
@@ -176,10 +186,10 @@ class control():
             layer_3 = layer_3.permute(1, 0, 2, 3)
             layer_4 = layer_4.permute(1, 0, 2, 3)
 
-            torchvision.utils.save_image(layer_1,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_1.png')
-            torchvision.utils.save_image(layer_2,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_2.png')
-            torchvision.utils.save_image(layer_3,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_3.png')
-            torchvision.utils.save_image(layer_4,'/content/drive/MyDrive/results_rcf/'+str(i)+'_'+'layer_4.png')
+            torchvision.utils.save_image(layer_1,'/content/gdrive/MyDrive/results_rcf/'+str(i)+'_'+'layer_1.png')
+            torchvision.utils.save_image(layer_2,'/content/gdrive/MyDrive/results_rcf/'+str(i)+'_'+'layer_2.png')
+            torchvision.utils.save_image(layer_3,'/content/gdrive/MyDrive/results_rcf/'+str(i)+'_'+'layer_3.png')
+            torchvision.utils.save_image(layer_4,'/content/gdrive/MyDrive/results_rcf/'+str(i)+'_'+'layer_4.png')
 
             y = torch.squeeze(y, dim=0)
             #image = torchvision.utils.make_grid([result, y], padding=2)
