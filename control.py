@@ -87,10 +87,10 @@ class control():
                 loss = torch.zeros(1).to(flags.device)
 
                 #calculate loss from criterion
-                y = y.long()
-                loss = criterion(results[-1], y)
+                #y = y.long()
+                #loss = criterion(results[-1], y)
                 #last layer:
-                #loss = self.compute_loss(results[-1], y)
+                loss = self.compute_loss(results[-1], y)
                 #all layers:
                 #for r in results:
                 #    loss = loss + criterion(r,y)
