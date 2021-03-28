@@ -70,9 +70,8 @@ class control():
                                 batch_size=2,
                                 shuffle=True,
                                 num_workers=8)
-        #val_data = dataset('/home/joao/Documents/CNET/pascal/PASCALContourData/val.txt',
-        #val_data = dataset('/content/VOCdevkit/VOC2012/ImageSets/Segmentation/val.txt',
-        val_data = dataset('/content/val.txt',
+        val_data = dataset('/content/VOCdevkit/VOC2012/ImageSets/Segmentation/val.txt',
+        #val_data = dataset('/content/val.txt',
                            flags.base_root_img,
                            flags.base_root_mask,
                            flags.mode)
