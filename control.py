@@ -134,7 +134,7 @@ class control():
                 y = y.to(flags.device)
 
                 results = self.net(x)
-                val_loss += self.compute_loss(results, y).item()
+                val_loss += self.compute_loss_cnet(results[-1], y).item()
 
             scheduler.step(val_loss, epoch=epoch)
 
