@@ -67,7 +67,7 @@ class control():
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, verbose=True,patience=2, factor=0.2,mode='min')
 
         #set criterion (comment if using self.compute_loss())
-        criterion = nn.CrossEntropyLoss(ignore_index=255, reduction='mean')
+        criterion = nn.CrossEntropyLoss(ignore_index=255, reduction='none')
 
         self.net.to(flags.device)
         self.net.train()
@@ -88,9 +88,9 @@ class control():
 
                 #calculate loss from criterion
                 #y = y.long()
-                #loss = criterion(results[-1], y)
+                loss = criterion(results[-1], y)
                 #last layer:
-                loss = self.compute_loss(results[-1], y)
+                #loss = self.compute_loss(results[-1], y)
                 #all layers:
                 #for r in results:
                 #    loss = loss + criterion(r,y)
