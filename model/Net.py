@@ -82,13 +82,13 @@ class Net(nn.Module):
         self.conv5_3_down = nn.Conv2d(512, 21, 1, padding=0)
 
         #lr 0.01 0.02 decay 1 0
-        self.score_dsn1 = nn.Conv2d(21, 1, 1)
-        self.score_dsn2 = nn.Conv2d(21, 1, 1)
-        self.score_dsn3 = nn.Conv2d(21, 1, 1)
-        self.score_dsn4 = nn.Conv2d(21, 1, 1)
-        self.score_dsn5 = nn.Conv2d(21, 1, 1)
+        self.score_dsn1 = nn.Conv2d(3, 20, 1)
+        self.score_dsn2 = nn.Conv2d(3, 20, 1)
+        self.score_dsn3 = nn.Conv2d(3, 20, 1)
+        self.score_dsn4 = nn.Conv2d(3, 20, 1)
+        self.score_dsn5 = nn.Conv2d(3, 20, 1)
         #lr 0.001 0.002 decay 1 0
-        self.score_final = nn.Conv2d(5, 1, 1)
+        self.score_final = nn.Conv2d(5*20, 20, 1)
 
     def forward(self, x):
         # VGG
