@@ -203,7 +203,7 @@ class control():
             img = res.cpu().detach().numpy()*255
             img = Image.fromarray(np.array(img))
             img = img.convert('L')
-            img.save('content/'+str(name)+'.png')
+            img.save('/content/gdrive/MyDrive/results_rcf/'+str(name)+'.png')
             #writer.add_image(img_name, image)
             #result = torch.squeeze(result, dim=0)
             #result = torch.squeeze(result, dim=0)
