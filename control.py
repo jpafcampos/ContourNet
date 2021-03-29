@@ -178,9 +178,15 @@ class control():
             torch.cuda.empty_cache()
             x = x.to(flags.device)
             y = y.to(flags.device)
-            result, layer_1, layer_2, layer_3, layer_4 = self.net(x)
-            result = torch.squeeze(result, dim=0)
-            result = torch.squeeze(result, dim=0)
+            #result, layer_1, layer_2, layer_3, layer_4 = self.net(x)
+            results = self.net(x)
+            res = results[0]
+            layer_1 = results[1]
+            layer_2 = results[2]
+            layer_3 = results[3]
+            layer_4 = results[4]
+            res = torch.squeeze(res, dim=0)
+            res = torch.squeeze(res, dim=0)
             layer_1 = layer_1.permute(1, 0, 2, 3)
             layer_2 = layer_2.permute(1, 0, 2, 3)
             layer_3 = layer_3.permute(1, 0, 2, 3)
