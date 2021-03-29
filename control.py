@@ -200,7 +200,7 @@ class control():
             y = torch.squeeze(y, dim=0)
             #image = torchvision.utils.make_grid([result, y], padding=2)
             name = str(img_name).split('/')[-1].split('.')[0]
-            img = result.cpu().detach().numpy()*255
+            img = res.cpu().detach().numpy()*255
             img = Image.fromarray(np.array(img))
             img = img.convert('L')
             img.save('content/'+str(name)+'.png')
