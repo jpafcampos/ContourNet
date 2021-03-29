@@ -15,7 +15,7 @@ from thop import profile
 from torchvision import transforms
 
 writer = SummaryWriter('./tensorboard_logs/iter1')
-
+#git
 class control():
     net = Net()
     #writer.add_graph(net, input_to_model=torch.rand(1, 3, 224, 224))
