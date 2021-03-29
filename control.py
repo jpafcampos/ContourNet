@@ -155,7 +155,7 @@ class control():
             name = str(img_name).split('/')[-1].split('.')[0]
             img = result.cpu().detach().numpy()*255
             img = Image.fromarray(np.array(img))
-            img = img.convert('L')
+            #img = img.convert('L')
             img.save('content/'+str(name)+'.png')
             #writer.add_image(img_name, image)
             #result = torch.squeeze(result, dim=0)
